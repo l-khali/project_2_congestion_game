@@ -1,12 +1,14 @@
 import math
 import numpy as np
+from scipy.optimize import minimize
 
 def avg_cost(strat, N):
     # scaling factor
     k = N/5
 
+    y1, z1, y2, z2 = strat
     # compute total cost
-    total = 2*strat[0]**2 - (2*N-k)*strat[0] + strat[1]**2 - 3*k*strat[1] + 2*strat[2]**2 - (2*N-5*k)*strat[2] + strat[3]**2 - 3*k*strat[3] + 2*N*(N+k)
+    total = 2*y1**2 + 4*y1*y2 + 2*y2**2 + z1**2 + 2*z1*z2 + z2**2 + (k-4*N)*y1 + (5*k-4*N)*y2 - 3*k*(z1+z2) + 4*N**2 + 2*N*k
     # return average cost
     return total/(2*N)
 
@@ -14,23 +16,19 @@ def split_social_opt(N):
     # scaling factor
     k = N/5
 
-    # social optimum values for each variable
-    y1 = (2*N-k)/4
-    z1 = 3*k/2
-    x1 = N-y1
+    def cost(a):
+        w1, z1, w2, z2 = a
+        return avg_cost([w1+z1, z1, w2+z2, z2], N)
+    
+    opt = minimize(cost, [0,0,0,0], bounds = ((0,N),(0,N),(0,N),(0,N)))
 
-    y2 = (2*N-5*k)/4
-    z2 = 3*k/2
-    x2 = N-y2
+    w1, z1, w2, z2 = opt.x
 
-    # average cost per player under social optimum
-    avg_cost = N+k - 1/N*((2*N-k)**2/16+(2*N-5*k)**2/16+9*k**2/4)
-
-    return y1, z1, x1, y2, z2, x2, avg_cost
+    return [w1+z1, z1, w2+z2, w2]
 
 def atom_social_opt(N):
     # splittable social optimum
-    y1, z1, _, y2, z2, _, _ = split_social_opt(N)
+    y1, z1, y2, z2 = split_social_opt(N)
 
     split_opt = [y1, z1, y2, z2]
 
