@@ -203,37 +203,4 @@ def congestion_equilibrium(N = 10, nsim = 100):
     axs[3,1].bar([1,2,3], [count2_total["Path 1"], count2_total["Path 2"], count2_total["Path 3"]], color="red", tick_label=["Outlet 1", "Outlet 2", "Library Cafe"])
     axs[3,1].set_title("Type 2 Player Equilibria Conbined", fontsize=20)
 
-
-    # G1 = nx.DiGraph()
-    # G1.add_edge(1,2,color='r',weight=count1_total["y"], label="y")
-    # G1.add_edge(2,3,color='b',weight=count1_total["y"] - count1_total["z"], label="y-z")
-    # G1.add_edge(3,2,color='g',weight=count1_total["z"], label="z")
-    # G1.add_edge(1,3,color='g',weight=count1_total["x"], label="x")
-
-    # pos=nx.spring_layout(G1,seed=7)
-    # fig, ax = plt.subplots()
-    # nx.draw_networkx_nodes(G1, pos, ax=ax)
-    # nx.draw_networkx_labels(G1, pos, ax=ax)
-
-    # curved_edges = list(G1.edges(2,3)) + list(G1.edges(3,2))
-    # straight_edges = list(G1.edges(1,2)) + list(G1.edges(1,3))
-    # # curved_weights = [G1[u] for u in enumerate(curved_edges)]
-    # # straight_weights = [G1[u][v]['weight'] for u,v in straight_edges]
-    # curved_weights = [count1_total["y"] - count1_total["z"], count1_total["z"]]
-    # straight_weights = [count1_total["y"], count1_total["x"]]
-    # nx.draw_networkx_edges(G1, pos, ax=ax, edgelist=straight_edges, width=straight_weights, arrows=False)
-
-    # # pos=nx.spring_layout(G1,seed=5)
-    # # colors = [G1[u][v]['color'] for u,v in edges]
-    # # weights = [G1[u][v]['weight'] for u,v in edges]
-
-    # # nx.draw(G1, pos, edge_color=colors, width=weights, connectionstyle=f'arc3, rad = {0.25}')
-    # nx.draw_networkx_edges(G1, pos, ax=ax, edgelist=curved_edges, connectionstyle=f'arc3, rad = {0.25}', width=curved_weights)
-    # # nx.draw_networkx_edge_labels(G1, pos, edge_labels=nx.get_edge_attributes(G1,'label'), font_size=15)
-    # edge_labels = dict([((u, v,), f'{d["weight"]}\n\n{G1.edges[(v,u)]["weight"]}')
-    #             for u, v, d in G1.edges(data=True) if pos[u][0] > pos[v][0]])
-    # nx.draw_networkx_edge_labels(G1, pos, edge_labels=edge_labels, font_color='red')
-
-
-
     return equilibria
