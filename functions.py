@@ -1,7 +1,5 @@
 import numpy as np
-import scipy.integrate as integrate
 from collections import Counter
-import networkx as nx
 import matplotlib.pyplot as plt
 
 def cost(player_type, current_cost, current_strategy, strategies1, strategies2, player, N):
