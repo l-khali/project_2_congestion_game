@@ -1,6 +1,7 @@
 import numpy as np
 from collections import Counter
 import matplotlib.pyplot as plt
+import social_opt
 
 def cost(player_type, current_cost, current_strategy, strategies1, strategies2, player, N):
     scalar = N / 10
@@ -113,6 +114,7 @@ def congestion_equilibrium(N = 10, nsim = 100):
     count2_total = {"Path 1":0,"Path 2":0,"Path 3":0}
     found = 0
     equ_tracker = []
+    average_costs = []
     for sim in range(nsim):
         strategies1 = np.random.randint(1,4,int(N/2))
         strategies2 = np.random.randint(1,4,int(N/2))
@@ -161,6 +163,7 @@ def congestion_equilibrium(N = 10, nsim = 100):
 
             if (count1, count2) not in equilibria:
                 # print("Equilibrium found!")
+                average_costs.append(social_opt.avg_cost([int(N/2)-count1["Library Cafe"], count1["Outlet 2"], int(N/2)-count2["Library Cafe"], count2["Outlet 2"]], int(N/2)))
                 found += 1
                 equilibria.append((count1, count2))
                 count1_total["Path 3"] += count1["Library Cafe"]
@@ -171,6 +174,8 @@ def congestion_equilibrium(N = 10, nsim = 100):
                 count2_total["Path 2"] += count2["Outlet 2"]
     
     print("Number of equilibria found:", found)
+    print("Min average cost:", min(average_costs))
+    print("Max average cost:", max(average_costs))
 
     fig, axs = plt.subplots(4, 2, figsize=(17, 30))
     axs[0,0].tick_params(axis='both', which='major', labelsize=15)
