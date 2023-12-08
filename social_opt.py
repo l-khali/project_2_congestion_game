@@ -46,7 +46,7 @@ def atom_social_opt(N):
         avg_costs.append(avg_cost(o, N))
     
     # find smallest cost
-    ind = np.argmin(avg_costs)
-    
-    return atom_opts[ind], avg_costs[ind]
+    ind = np.where(avg_costs==min(np.array(avg_costs)))[0]
+
+    return list(set([tuple(o)for o in np.array(atom_opts)[ind]]))
     
